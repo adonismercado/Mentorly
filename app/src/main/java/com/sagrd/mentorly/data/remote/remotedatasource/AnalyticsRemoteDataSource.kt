@@ -1,5 +1,6 @@
 package com.sagrd.mentorly.data.remote.remotedatasource
 
+import com.sagrd.mentorly.data.remote.RemoteError
 import com.sagrd.mentorly.data.remote.api.AnalyticsApi
 import com.sagrd.mentorly.data.remote.dto.analytics.AnalyticsOverviewDto
 import com.sagrd.mentorly.data.remote.dto.analytics.CompletionTimeReportDto
@@ -16,14 +17,14 @@ class AnalyticsRemoteDataSource @Inject constructor(
         return try {
             val response = api.getOverview(adminId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo conectar con el servidor. Verifica tu conexión e intenta de nuevo."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -31,14 +32,14 @@ class AnalyticsRemoteDataSource @Inject constructor(
         return try {
             val response = api.getDropOff(adminId, courseId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo conectar con el servidor. Verifica tu conexión e intenta de nuevo."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -46,14 +47,14 @@ class AnalyticsRemoteDataSource @Inject constructor(
         return try {
             val response = api.getCompletionTimeReport(adminId, courseId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo conectar con el servidor. Verifica tu conexión e intenta de nuevo."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -61,14 +62,14 @@ class AnalyticsRemoteDataSource @Inject constructor(
         return try {
             val response = api.getBottlenecks(adminId, courseId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo conectar con el servidor. Verifica tu conexión e intenta de nuevo."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -76,14 +77,14 @@ class AnalyticsRemoteDataSource @Inject constructor(
         return try {
             val response = api.getEnrollmentHistory(adminId, courseId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo conectar con el servidor. Verifica tu conexión e intenta de nuevo."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 }
