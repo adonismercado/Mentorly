@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
+private const val UNKNOWN_ERROR_MESSAGE = "Error desconocido"
 class AnalyticsRepositoryImpl @Inject constructor(
     private val remoteDataSource: AnalyticsRemoteDataSource
 ) : AnalyticsRepository {
@@ -15,34 +16,34 @@ class AnalyticsRepositoryImpl @Inject constructor(
         emit(Resource.Loading())
         remoteDataSource.getOverview(adminId)
             .onSuccess { emit(Resource.Success(it.toDomain())) }
-            .onFailure { emit(Resource.Error(it.message ?: "Error desconocido")) }
+            .onFailure { emit(Resource.Error(it.message ?: UNKNOWN_ERROR_MESSAGE)) }
     }
 
     override fun getDropOff(adminId: String, courseId: String): Flow<Resource<List<DropOff>>> = flow {
         emit(Resource.Loading())
         remoteDataSource.getDropOff(adminId, courseId)
             .onSuccess { list -> emit(Resource.Success(list.map { it.toDomain() })) }
-            .onFailure { emit(Resource.Error(it.message ?: "Error desconocido")) }
+            .onFailure { emit(Resource.Error(it.message ?: UNKNOWN_ERROR_MESSAGE)) }
     }
 
     override fun getCompletionTimeReport(adminId: String, courseId: String): Flow<Resource<CompletionTimeReport>> = flow {
         emit(Resource.Loading())
         remoteDataSource.getCompletionTimeReport(adminId, courseId)
             .onSuccess { emit(Resource.Success(it.toDomain())) }
-            .onFailure { emit(Resource.Error(it.message ?: "Error desconocido")) }
+            .onFailure { emit(Resource.Error(it.message ?: UNKNOWN_ERROR_MESSAGE)) }
     }
 
     override fun getBottlenecks(adminId: String, courseId: String): Flow<Resource<List<PeerReviewBottleneck>>> = flow {
         emit(Resource.Loading())
         remoteDataSource.getBottlenecks(adminId, courseId)
             .onSuccess { list -> emit(Resource.Success(list.map { it.toDomain() })) }
-            .onFailure { emit(Resource.Error(it.message ?: "Error desconocido")) }
+            .onFailure { emit(Resource.Error(it.message ?: UNKNOWN_ERROR_MESSAGE)) }
     }
 
     override fun getEnrollmentHistory(adminId: String, courseId: String): Flow<Resource<List<EnrollmentHistory>>> = flow {
         emit(Resource.Loading())
         remoteDataSource.getEnrollmentHistory(adminId, courseId)
             .onSuccess { list -> emit(Resource.Success(list.map { it.toDomain() })) }
-            .onFailure { emit(Resource.Error(it.message ?: "Error desconocido")) }
+            .onFailure { emit(Resource.Error(it.message ?: UNKNOWN_ERROR_MESSAGE)) }
     }
 }
