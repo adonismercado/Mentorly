@@ -1,5 +1,6 @@
 package com.sagrd.mentorly.data.remote.remotedatasource
 
+import com.sagrd.mentorly.data.remote.RemoteError
 import com.sagrd.mentorly.data.remote.api.ThemeApi
 import com.sagrd.mentorly.data.remote.dto.common.ReorderItemsDto
 import com.sagrd.mentorly.data.remote.dto.theme.CreateThemeDto
@@ -15,14 +16,14 @@ class ThemeRemoteDataSource @Inject constructor(
         return try {
             val response = api.getThemesByUnit(unitId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -34,14 +35,14 @@ class ThemeRemoteDataSource @Inject constructor(
         return try {
             val response = api.createTheme(adminId, unitId, dto)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -53,14 +54,14 @@ class ThemeRemoteDataSource @Inject constructor(
         return try {
             val response = api.updateTheme(adminId, themeId, dto)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -68,14 +69,14 @@ class ThemeRemoteDataSource @Inject constructor(
         return try {
             val response = api.deleteTheme(adminId, themeId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -87,14 +88,14 @@ class ThemeRemoteDataSource @Inject constructor(
         return try {
             val response = api.reorderThemes(adminId, unitId, dto)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 }

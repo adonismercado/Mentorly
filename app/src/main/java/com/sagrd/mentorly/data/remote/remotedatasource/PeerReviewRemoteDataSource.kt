@@ -1,5 +1,6 @@
 package com.sagrd.mentorly.data.remote.remotedatasource
 
+import com.sagrd.mentorly.data.remote.RemoteError
 import com.sagrd.mentorly.data.remote.api.PeerReviewApi
 import com.sagrd.mentorly.data.remote.dto.submission.AnonymousSubmissionDto
 import com.sagrd.mentorly.data.remote.dto.peerreview.CreatePeerReviewRequestDto
@@ -20,14 +21,14 @@ class PeerReviewRemoteDataSource @Inject constructor(
         return try {
             val response = api.getRubric(activityId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -39,14 +40,14 @@ class PeerReviewRemoteDataSource @Inject constructor(
         return try {
             val response = api.createRubricCriterion(adminId, activityId, dto)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -58,14 +59,14 @@ class PeerReviewRemoteDataSource @Inject constructor(
         return try {
             val response = api.updateRubricCriterion(adminId, criterionId, dto)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -76,14 +77,14 @@ class PeerReviewRemoteDataSource @Inject constructor(
         return try {
             val response = api.deleteRubricCriterion(adminId, criterionId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -91,14 +92,14 @@ class PeerReviewRemoteDataSource @Inject constructor(
         return try {
             val response = api.getQueue(studentId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -106,14 +107,14 @@ class PeerReviewRemoteDataSource @Inject constructor(
         return try {
             val response = api.getMyReviews(studentId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -124,14 +125,14 @@ class PeerReviewRemoteDataSource @Inject constructor(
         return try {
             val response = api.getAnonymousSubmission(studentId, submissionId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -142,14 +143,14 @@ class PeerReviewRemoteDataSource @Inject constructor(
         return try {
             val response = api.getAudit(adminId, peerReviewId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -157,14 +158,14 @@ class PeerReviewRemoteDataSource @Inject constructor(
         return try {
             val response = api.getAllPeerReviews(adminId)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -175,14 +176,14 @@ class PeerReviewRemoteDataSource @Inject constructor(
         return try {
             val response = api.submitReview(studentId, dto)
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 }

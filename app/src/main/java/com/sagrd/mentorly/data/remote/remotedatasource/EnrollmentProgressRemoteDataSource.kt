@@ -1,5 +1,6 @@
 package com.sagrd.mentorly.data.remote.remotedatasource
 
+import com.sagrd.mentorly.data.remote.RemoteError
 import com.sagrd.mentorly.data.remote.api.EnrollmentProgressApi
 import com.sagrd.mentorly.data.remote.dto.progress.EnrollmentProgressDto
 import retrofit2.HttpException
@@ -16,14 +17,14 @@ class EnrollmentProgressRemoteDataSource @Inject constructor(
             val response = api.getEnrollmentProgress(enrollmentId)
 
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -35,14 +36,14 @@ class EnrollmentProgressRemoteDataSource @Inject constructor(
             val response = api.getAdminEnrollmentProgress(adminId, enrollmentId)
 
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 
@@ -54,14 +55,14 @@ class EnrollmentProgressRemoteDataSource @Inject constructor(
             val response = api.completeTheme(enrollmentId, themeId)
 
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo completar la solicitud. Intenta de nuevo más tarde."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde.", exception))
+            Result.failure(RemoteError.SERVER_ERROR.toException(exception))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde.", exception))
+            Result.failure(RemoteError.UNKNOWN_ERROR.toException(exception))
         }
     }
 }
