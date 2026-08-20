@@ -1,5 +1,6 @@
 package com.sagrd.mentorly.data.remote.remotedatasource
 
+import com.sagrd.mentorly.data.remote.RemoteError
 import com.sagrd.mentorly.data.remote.api.ActivityApi
 import com.sagrd.mentorly.data.remote.dto.activity.CreateActivityDto
 import com.sagrd.mentorly.data.remote.dto.activity.UpdateActivityDto
@@ -17,14 +18,14 @@ class ActivityRemoteDataSource @Inject constructor(
             val response = api.getActivities(themeId)
 
             if (!response.isSuccessful) {
-                Result.failure(Exception("Error de red ${response.code()}"))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Error de servidor", exception))
+            Result.failure(Exception(RemoteError.SERVER_ERROR.toException(exception)))
         } catch (exception: Exception) {
-            Result.failure(Exception("Error desconocido", exception))
+            Result.failure(Exception(RemoteError.UNKNOWN_ERROR.toException(exception)))
         }
     }
 
@@ -37,14 +38,14 @@ class ActivityRemoteDataSource @Inject constructor(
             val response = api.createActivity(adminId, themeId, activity)
 
             if (!response.isSuccessful) {
-                Result.failure(Exception("Error de red ${response.code()}"))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(response.body()!!)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Error de servidor", exception))
+            Result.failure(Exception(RemoteError.SERVER_ERROR.toException(exception)))
         } catch (exception: Exception) {
-            Result.failure(Exception("Error desconocido", exception))
+            Result.failure(Exception(RemoteError.UNKNOWN_ERROR.toException(exception)))
         }
     }
 
@@ -57,14 +58,14 @@ class ActivityRemoteDataSource @Inject constructor(
             val response = api.updateActivity(adminId, activityId, activity)
 
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo conectar con el servidor. Verifica tu conexión e intenta de nuevo."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(Unit)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde."))
+            Result.failure(Exception(RemoteError.SERVER_ERROR.toException(exception)))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde."))
+            Result.failure(Exception(RemoteError.UNKNOWN_ERROR.toException(exception)))
         }
     }
 
@@ -76,14 +77,14 @@ class ActivityRemoteDataSource @Inject constructor(
             val response = api.deleteActivity(adminId, activityId)
 
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo conectar con el servidor. Verifica tu conexión e intenta de nuevo."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(Unit)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde."))
+            Result.failure(Exception(RemoteError.SERVER_ERROR.toException(exception)))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde."))
+            Result.failure(Exception(RemoteError.UNKNOWN_ERROR.toException(exception)))
         }
     }
 
@@ -96,14 +97,14 @@ class ActivityRemoteDataSource @Inject constructor(
             val response = api.reorderActivities(adminId, themeId, items)
 
             if (!response.isSuccessful) {
-                Result.failure(Exception("No se pudo conectar con el servidor. Verifica tu conexión e intenta de nuevo."))
+                Result.failure(RemoteError.REQUEST_FAILED.toException())
             } else {
                 Result.success(Unit)
             }
         } catch (exception: HttpException) {
-            Result.failure(Exception("Ocurrió un problema al comunicarnos con el servidor. Intenta más tarde."))
+            Result.failure(Exception(RemoteError.SERVER_ERROR.toException(exception)))
         } catch (exception: Exception) {
-            Result.failure(Exception("Algo salió mal. Intenta de nuevo más tarde."))
+            Result.failure(Exception(RemoteError.UNKNOWN_ERROR.toException(exception)))
         }
     }
 }
